@@ -432,7 +432,7 @@ void filter() {
                 while (c != '\n') {
                     c = (char) getchar_unlocked();
                 }
-                return 1;
+                return 4;
             } else {
                 for (int i = 0; i < 9; i++) { //da capire se si può fare meglio
                     getchar();
@@ -442,7 +442,7 @@ void filter() {
                     while (c != '\n') {
                         c = (char) getchar();
                     }
-                    return 2;
+                    return -1;
                 }
                     //read stop inserting new words command
                 else {
@@ -451,13 +451,13 @@ void filter() {
                     }
                     //TO INSERT:checkConstraints
                     filter();
-                    return 3;
+                    return 2;
                 }
             }
         }
 
         //the game is ended
-        if (c == EOF) return 4;
+        if (c == EOF) return 99;
 
 //THE INPUT IS A STRING THAT NEEDS TO BE ADDED INTO THE HASH TABLE
         while (c != '\n' && count < dim) {
@@ -468,7 +468,7 @@ void filter() {
         if (count != 0) {
             buffer[count] = '\0';
         }
-        return 5;
+        return 3;
     }
 
 /*------------------------------------------------------MAIN----------------------------------------------------------*/
@@ -501,17 +501,17 @@ void filter() {
                     memorize = false;
                     count = 0;
                     break;
-                case 2: //inserisci inizio
+                case 1: //inserisci inizio
                     playing = false;
                     memorize = true;
                     break;
-                case 3: //inserisci fine
+                case 2: //inserisci fine
                     //filter(hashTab, T, (int) dim);
                     playing = true;
                     memorize = false;
                     filter();
                     break;
-                case 5: //ho letto una parola
+                case 3: //ho letto una parola
                     if (playing == true && count <= attempts &&
                         memorize == false) {//la parola che ho letto è da comparare a quella di riferimento
                         temp = search(T, buffer);
@@ -554,7 +554,7 @@ void filter() {
                         T = insertBST(T, buffer);
                     }
                     break;
-                case 1://STAMPA FILTRATE
+                case 4://STAMPA FILTRATE
                     //printf("stampa filtrate\n");
                     printFiltered(T);
                     break;
